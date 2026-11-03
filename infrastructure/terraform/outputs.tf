@@ -27,3 +27,18 @@ output "eks_cluster_endpoint" {
   description = "Endpoint for EKS control plane"
   value       = aws_eks_cluster.main.endpoint
 }
+
+output "eks_oidc_provider_arn" {
+  description = "OIDC Provider ARN for EKS IRSA"
+  value       = aws_iam_openid_connect_provider.eks.arn
+}
+
+output "external_secrets_role_arn" {
+  description = "IAM Role ARN for External Secrets Operator IRSA"
+  value       = aws_iam_role.external_secrets.arn
+}
+
+output "secrets_manager_backend_arn" {
+  description = "AWS Secrets Manager Secret ARN for Backend"
+  value       = aws_secretsmanager_secret.backend_secrets.arn
+}
