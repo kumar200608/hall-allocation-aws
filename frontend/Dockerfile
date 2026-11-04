@@ -1,17 +1,19 @@
 # Stage 1: Build the React Application
-FROM node:20-alpine AS build
+FROM node:20-slim AS build
 
 WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install
 
-# Copy source code and build
+# Copy source files
 COPY . .
-RUN npm run build
 
-# Stage 2: Serve with Nginx
+# Build application using local vite binary
+RUN ./node_modules/.bin/vite build
+
+# Stage 2: Production Nginx Server
 FROM nginx:alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
